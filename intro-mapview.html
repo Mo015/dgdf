@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Intro to MapView - Create a 2D map | Sample | ArcGIS Maps SDK for
+      JavaScript 4.27
+    </title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.27/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.27/"></script>
+
+    <script>
+            require(["esri/Map", "esri/views/MapView","esri/layers/GeoJSONLayer","esri/widgets/Legend"], 
+            (Map, MapView,GeoJSONLayer,Legend) => {
+    
+              const map = new Map({
+                basemap: "topo-vector",  
+              });
+
+              const view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 15,
+                center: [   31.48136929,
+                                30.58593502] // longitude, latitude
+              });
+              const geojsonlayer = new GeoJSONLayer({
+          url: "http://localhost:8080/geoserver/Mo.0155/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Mo.0155%3Arailways&maxFeatures=50&outputFormat=application%2Fjson",
+        });  map.add(geojsonlayer);
+
+        let legend = new Legend({
+  view: view
+});
+
+view.ui.add(legend, "bottom-right");
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
